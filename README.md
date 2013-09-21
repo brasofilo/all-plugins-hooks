@@ -7,8 +7,7 @@ Scan plugins and themes for hooks. Displays a prettified list with all actions a
 
 ##Screenshots
 
-**Plugin screen**:  
-> ![Plugin screen](https://raw.github.com/brasofilo/all-plugins-hooks/master/screenshot.png)
+![Plugin screen](https://raw.github.com/brasofilo/all-plugins-hooks/master/screenshot.png)
 
 
 ##Acknowledgments
