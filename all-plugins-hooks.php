@@ -2,8 +2,8 @@
 /**
  * Plugin Name: All Themes/Plugins Hooks
  * Plugin URI: http://wordpress.org/extend/plugins/
- * Description: Shows all the hooks of a given plugin, separated by file and hook type. Inspired by http://stackoverflow.com/a/18881544/1287812
- * Version: 0.1
+ * Description: Shows all the hooks of a given plugin, separated by file and hook type.
+ * Version: 1.0
  * Author: Rodolfo Buaiz
  * Author URI: http://wordpress.stackexchange.com/users/12615/brasofilo
  * License: GPLv2 or later
