@@ -15,6 +15,7 @@ Available hook:
 ###Acknowledgments
 
  - Inspired by this [Stack Overflow post](http://stackoverflow.com/a/18881544/1287812).
+ - Uses [Google Code Pretify](https://code.google.com/p/google-code-prettify/).
 
 ###Changelog
 
