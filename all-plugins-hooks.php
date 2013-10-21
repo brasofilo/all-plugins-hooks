@@ -3,7 +3,7 @@
  * Plugin Name: All Themes/Plugins Hooks
  * Plugin URI: http://wordpress.org/extend/plugins/
  * Description: Shows all the hooks of a given plugin, separated by file and hook type.
- * Version: 1.0
+ * Version: 1.1
  * Author: Rodolfo Buaiz
  * Author URI: http://wordpress.stackexchange.com/users/12615/brasofilo
  * License: GPLv2 or later
@@ -134,7 +134,12 @@ class B5F_Get_All_Plugin_Hooks
         $this->transient_time = apply_filters( 'aph_transient_time', 60*60*24 );
         add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
         add_action( 'admin_init', array( $this, 'page_init' ) );
+        
+        global $pagenow;
+        if( 'plugins.php' != $pagenow )
+            return;
         add_filter( 'plugin_row_meta', array( $this, 'donate_link' ), 10, 4 );
+		add_filter( 'plugin_action_links', array( $this, 'settings_plugin_link' ), 10, 2 );
     }
     
     
@@ -154,6 +159,26 @@ class B5F_Get_All_Plugin_Hooks
     }
 
     
+	/**
+	 * Add link to settings in Plugins list page
+	 * 
+	 * @return Plugin link
+	 */
+	public function settings_plugin_link( $links, $file )
+	{
+		if( $file == plugin_basename( dirname( __FILE__ ) . '/' . $this->slug . '.php' ) )
+		{
+			$links[] = '<a href="'
+					. admin_url( 'tools.php?page=all-plugins-hooks' )
+					. '">'
+					. __( 'Settings', 'ejmm' )
+					. '</a>';
+			
+		}
+		return $links;
+	}
+
+
     /**
      * Print our custom Plugins > All Hooks page
      */

@@ -1,32 +1,36 @@
-All Plugins Hooks
-=================
+# [All Plugins Hooks](https://github.com/brasofilo/all-plugins-hooks)
+<sup>*Version 1.1*</sup>
 
-Scan plugins and themes for hooks. Displays a prettified list with all actions and filters, with filename and line numbers.
+Scan plugins and themes for hooks. Displays a prettified list with all actions and filters, with filename and line numbers. Results are cached in transients.
 
 **Important**: *Does not run in Windows*.
 
-##Screenshots
+![Plugin screen](screenshot.png)
 
-![Plugin screen](https://raw.github.com/brasofilo/all-plugins-hooks/master/screenshot.png)
+###FAQ
+Available hook:
 
-
-##Acknowledgments
+    apply_filters( 'aph_transient_time', 60*60*24 );
+    
+###Acknowledgments
 
  - Inspired by this [Stack Overflow post](http://stackoverflow.com/a/18881544/1287812).
 
- - Plugin skeleton from [Plugin Class Demo](https://gist.github.com/3804204), by toscho. 
+###Changelog
 
-##Changelog
+**Version 1.1**
 
-### 1.0
+* Small adjustments
+
+**Version 1.0**
 
 * Initial Public Release
 
-##Credits
+###Credits
 
 This plugin is built and maintained by [Rodolfo Buaiz](http://brasofilo.com), aka brasofilo.
 
-##License
+###License
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
