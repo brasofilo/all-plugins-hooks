@@ -3,7 +3,7 @@
  * Plugin Name: All Themes/Plugins Hooks
  * Plugin URI: http://wordpress.org/extend/plugins/
  * Description: Shows all the hooks of a given plugin, separated by file and hook type.
- * Version: 1.1
+ * Version: 2013.10.23
  * Author: Rodolfo Buaiz
  * Author URI: http://wordpress.stackexchange.com/users/12615/brasofilo
  * License: GPLv2 or later
@@ -214,10 +214,7 @@ class B5F_Get_All_Plugin_Hooks
 			<div>
 			<?php
 				if( !empty( $this->options['plugin_id'] ) )
-				{
-					$path = $this->options['plugin_id'];
-					$this->do_print( $path );
-				}
+					$this->do_print( $this->options['plugin_id'] );
 			?>
 			<div>
         </div>
@@ -342,15 +339,28 @@ class B5F_Get_All_Plugin_Hooks
 	{
         # Controls if there are no actions or filters in a plugin
 		$nothing = 0;
-        
-        $transient_name = $this->option_name . '_' . $this->current_plugins[$path];
-        $get_files = get_transient( $transient_name );
+        # Directory cache was reset, option does not exist anymore
+        $get_files = false;
+        if( isset( $this->current_plugins[$path] ) )
+        {
+            $transient_name = $this->option_name . '_' . $this->current_plugins[$path];
+            $get_files = get_transient( $transient_name );
+        }
+        # Transient not set, read directory and set transient
         if( !$get_files )
         {
             $get_files = $this->scan_plugin_files( $path );
+            # Could not read directory
+            if( 'dir-open-fail' == $get_files ){
+                $this->options['plugin_id'] = '';
+                update_option( $this->option_name, $this->options );
+                $this->scan_plugins_directory(true);
+                echo 'Failed to fetch directory, please refresh the page to reset the cache.';
+                return;
+            }
             set_transient( $transient_name, $get_files, $this->transient_time );
         }
-            
+        
         foreach( $get_files as $dir => $values )
         {
             if ( !empty( $values['get_actions'] ) || !empty( $values['get_filters'] ) ) 
@@ -399,8 +409,14 @@ class B5F_Get_All_Plugin_Hooks
     {
         $get_files = array();
         $scan_type = $this->get_scan_type();
-
-        foreach( new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $path ) ) as $filename ) 
+        
+        try {
+            $recursive = new RecursiveDirectoryIterator( $path );
+        } catch (Exception $e) {
+            return 'dir-open-fail';
+        }
+        
+        foreach( new RecursiveIteratorIterator( $recursive ) as $filename ) 
         {
             if ( substr( $filename, -3 ) == 'php' ) 
             {
@@ -425,12 +441,12 @@ class B5F_Get_All_Plugin_Hooks
      * 
      * @return array
      */
-    private function scan_plugins_directory()
+    private function scan_plugins_directory( $force = false )
     {
         $transient_name = $this->option_name . '_directories';
         $current_plugins = get_transient( $transient_name );
         $scan_type = $this->get_scan_type( '/', '');
-        if( !$current_plugins )
+        if( !$current_plugins || $force )
         {
             $path = WP_CONTENT_DIR . $scan_type;
             $dirs = array_filter( glob( $path . '/*' , GLOB_ONLYDIR), 'is_dir' );

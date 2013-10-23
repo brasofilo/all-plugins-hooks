@@ -1,6 +1,7 @@
 # [All Plugins Hooks](https://github.com/brasofilo/all-plugins-hooks)
-<sup>*Version 1.1*</sup>
+<sup>*Version 2013.10.23*</sup>
 
+##*Our own mini-AdamBrown*
 Scan plugins and themes for hooks. Displays a prettified list with all actions and filters, with filename and line numbers. Results are cached in transients.
 
 **Important**: *Does not run in Windows*.
@@ -16,8 +17,14 @@ Available hook:
 
  - Inspired by this [Stack Overflow post](http://stackoverflow.com/a/18881544/1287812).
  - Uses [Google Code Pretify](https://code.google.com/p/google-code-prettify/).
-
+ 
 ###Changelog
+
+**Version 2013.10.23**
+
+* Changed versioning numbering
+* Better error handling 
+* Cache reset on errors
 
 **Version 1.1**
 
